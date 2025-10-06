@@ -27,32 +27,57 @@ function makeOptions(data, species) {
   };
 }
 ---
+
 <Layout>
-<h1>Graphiques de toutes les espèces de pingouins</h1>
+  <section class="flex flex-col items-center gap-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">Graphiques de toutes les espèces de pingouins</h1>
 
-    <div class="tabs" id="tabs">
-      {grouped.map((g, i) => (
-        <button class={`tab ${i === 0 ? "active" : ""}`} data-target={g.species}>
-          {g.species}
-        </button>
-      ))}
-    </div>
+    <div class="w-full max-w-3xl relative flex items-center">
+      <button
+        id="prev"
+        class="text-white bg-gray-800/50 hover:bg-gray-800 px-3 py-1 rounded mr-2">
+        ⟨
+      </button>
 
-    {grouped.map((g, i) => (
-      <div id={g.species} class={`chart ${i === 0 ? "active" : ""}`}>
-        <PlotFigure options={makeOptions(g.data, g.species)} />
+      <div class="flex-1">
+        {grouped.map((g, i) => (
+          <div class={`slide ${i === 0 ? "block" : "hidden"}`} id={g.species}>
+            <h2 class="text-center text-lg font-semibold mb-2">{g.species}</h2>
+            <PlotFigure options={makeOptions(g.data, g.species)} />
+          </div>
+        ))}
       </div>
-    ))}
 
-    <script>
-      const tabs = document.querySelectorAll(".tab");
-      tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-          document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-          document.querySelectorAll(".chart").forEach(c => c.classList.remove("active"));
-          tab.classList.add("active");
-          document.getElementById((tab as HTMLElement).dataset.target).classList.add("active");
-        });
+      <button
+        id="next"
+        class="text-white bg-gray-800/50 hover:bg-gray-800 px-3 py-1 rounded ml-2">
+        ⟩
+      </button>
+    </div>
+  </section>
+
+  <script>
+    const slides = document.querySelectorAll(".slide");
+    const next = document.getElementById("next");
+    const prev = document.getElementById("prev");
+
+    let current = 0;
+
+    function showSlide(index) {
+      slides.forEach((s, i) => {
+        s.classList.toggle("hidden", i !== index);
+        s.classList.toggle("block", i === index);
       });
-    </script>
+    }
+
+    next.addEventListener("click", () => {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    });
+
+    prev.addEventListener("click", () => {
+      current = (current - 1 + slides.length) % slides.length;
+      showSlide(current);
+    });
+  </script>
 </Layout>
