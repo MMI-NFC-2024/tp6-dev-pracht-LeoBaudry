@@ -1,0 +1,36 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import PlotFigure from "../../../components/PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+import alphabet from "../../../assets/alphabet.json";
+
+// Générer le chemin statique
+export async function getStaticPaths() {
+  return [{ params: { letters: "letters" } }];
+}
+
+const { letters } = Astro.params;
+
+// Options du graphique
+const plotOptions = {
+  grid: true,
+  marks: [
+    Plot.barY(alphabet, {
+      x: "letter",
+      y: "frequency",
+      fill: "skyblue",
+    }),
+  ],
+  x: { label: "Letter" },
+  y: { label: "Frequency" },
+  title: "Fréquence des lettres (statique)",
+};
+---
+
+<Layout>
+  <a class="btn btn-link mb-4" href="/rendu-statique">← Retour à la liste</a>
+  <h1 class="text-3xl font-bold mb-4 text-primary">Alphabet (statique)</h1>
+    <div class="bg-base-200 rounded-box p-4">
+    <PlotFigure options={plotOptions} />
+    </div>
+</Layout>

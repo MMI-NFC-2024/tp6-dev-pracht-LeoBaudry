@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PlotFigure from "../components/PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+import alphabet from "../assets/alphabet.json";
+
+const plotOptions = {
+  grid: true,
+  marks: [
+    Plot.barY(alphabet, {
+      x: "letter",
+      y: "frequency",
+      fill: "skyblue",
+    }),
+  ],
+  x: { label: "Letter" },
+  y: { label: "Frequency" },
+  title: "Frequency of letters in English",
+};
+---
+
+<Layout>
+  <h1 class="text-2xl font-bold mb-6">Fréquence des lettres de l'alphabet</h1>
+  <PlotFigure options={plotOptions} />
+</Layout>

@@ -2,19 +2,43 @@
 import Layout from "../../layouts/Layout.astro";
 import penguins from "../../assets/penguins.json";
 
+// Liste des espèces de pingouins
 const speciesList = [...new Set(penguins.map(p => p.species))].sort();
+
+// Dataset alphabet
+const alphabetDatasets = [
+  { name: "alphabet", label: "Fréquence des lettres" }
+];
 ---
 
 <Layout>
-  <h1 class="text-3xl font-bold mb-6 text-primary">Liste des espèces (dynamique)</h1>
-  <ul class="menu bg-base-200 rounded-box p-4 text-lg">
-    {speciesList.map(s => (
-      <li>
-        <a class="text-neutral hover:bg-primary hover:text-base-100 transition-colors py-3 px-6 block" 
-           href={`/rendu-dynamique/${encodeURIComponent(String(s))}`}>
-          {s}
-        </a>
-      </li>
-    ))}
-  </ul>
+  <h1 class="text-3xl font-bold mb-6 text-primary">Rendu dynamique</h1>
+
+  <section class="mb-8">
+    <h2 class="text-xl font-semibold mb-2">Pingouins</h2>
+    <ul class="menu bg-base-200 rounded-box p-4 text-lg">
+      {speciesList.map(s => (
+        <li>
+          <a class="text-neutral hover:bg-primary hover:text-base-100 transition-colors py-3 px-6 block" 
+             href={`/rendu-dynamique/penguins/${encodeURIComponent(s as string)}`}>
+            {s}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-semibold mb-2">Alphabet</h2>
+    <ul class="menu bg-base-200 rounded-box p-4 text-lg">
+      {alphabetDatasets.map(d => (
+        <li>
+          <a class="text-neutral hover:bg-primary hover:text-base-100 transition-colors py-3 px-6 block" 
+             href={`/rendu-dynamique/alphabet/${encodeURIComponent(d.name)}`}>
+            {d.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 </Layout>
