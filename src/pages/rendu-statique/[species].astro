@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+import penguins from "../../assets/penguins.json";
+
+export async function getStaticPaths() {
+  const speciesList = [...new Set(penguins.map(p => p.species))];
+  return speciesList.map(s => ({ params: { species: s } }));
+}
+
+const { species } = Astro.params;
+const speciesName = decodeURIComponent(species as string);
+
+const data = penguins.filter(p => p.species === speciesName);
+
+const plotOptions = {
+  grid: true,
+  marks: [
+    Plot.dot(
+      data.filter(d => d.culmen_length_mm != null && d.culmen_depth_mm != null),
+      {
+        x: "culmen_length_mm",
+        y: "culmen_depth_mm",
+        stroke: "sex",
+        r: 4,
+        fillOpacity: 0.8,
+      }
+    ),
+  ],
+  x: { label: "Culmen length (mm)" },
+  y: { label: "Culmen depth (mm)" },
+  title: `Espèce ${speciesName}`,
+};
+---
+
+<Layout>
+  <a class="text-blue-600 hover:underline mb-4 inline-block" href="/rendu-statique">← Retour à la liste</a>
+  <h1 class="text-2xl font-bold mb-4">Pingouins {speciesName}</h1>
+  <p class="mb-4">{data.length} enregistrement(s) pour cette espèce</p>
+  <PlotFigure options={plotOptions} />
+</Layout>
