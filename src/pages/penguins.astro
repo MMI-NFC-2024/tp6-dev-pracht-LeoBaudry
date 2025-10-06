@@ -41,7 +41,7 @@ function makeOptions(data, species) {
 
       <div class="flex-1">
         {grouped.map((g, i) => (
-          <div class={`slide ${i === 0 ? "block" : "hidden"}`} id={g.species}>
+          <div class={`slide ${i === 0 ? "block" : "hidden"}`} id={String(g.species)}>
             <h2 class="text-center text-lg font-semibold mb-2">{g.species}</h2>
             <PlotFigure options={makeOptions(g.data, g.species)} />
           </div>
