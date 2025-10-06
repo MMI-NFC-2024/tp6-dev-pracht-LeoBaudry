@@ -6,11 +6,12 @@ const speciesList = [...new Set(penguins.map(p => p.species))].sort();
 ---
 
 <Layout>
-  <h1 class="text-2xl font-bold mb-4">Liste des espèces (dynamique)</h1>
-  <ul class="list-disc pl-6 space-y-1">
+  <h1 class="text-3xl font-bold mb-6 text-primary">Liste des espèces (dynamique)</h1>
+  <ul class="menu bg-base-200 rounded-box p-4 text-lg">
     {speciesList.map(s => (
       <li>
-        <a class="text-blue-600 hover:underline" href={`/rendu-dynamique/${encodeURIComponent(String(s))}`}>
+        <a class="text-neutral hover:bg-primary hover:text-base-100 transition-colors py-3 px-6 block" 
+           href={`/rendu-dynamique/${encodeURIComponent(String(s))}`}>
           {s}
         </a>
       </li>

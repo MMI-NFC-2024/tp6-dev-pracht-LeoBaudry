@@ -29,32 +29,34 @@ function makeOptions(data, species) {
 ---
 
 <Layout>
-  <section class="flex flex-col items-center gap-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">Graphiques de toutes les espèces de pingouins</h1>
+<section class="flex flex-col items-center gap-4 py-8">
+    <h1 class="text-2xl font-bold mb-6 text-primary">Graphiques de toutes les espèces de pingouins</h1>
 
     <div class="w-full max-w-3xl relative flex items-center">
-      <button
-        id="prev"
-        class="text-white bg-gray-800/50 hover:bg-gray-800 px-3 py-1 rounded mr-2">
-        ⟨
-      </button>
+        <button
+            id="prev"
+            class="btn btn-circle btn-outline btn-primary mr-2"
+            aria-label="Précédent">
+            ⟨
+        </button>
 
-      <div class="flex-1">
-        {grouped.map((g, i) => (
-          <div class={`slide ${i === 0 ? "block" : "hidden"}`} id={String(g.species)}>
-            <h2 class="text-center text-lg font-semibold mb-2">{g.species}</h2>
-            <PlotFigure options={makeOptions(g.data, g.species)} />
-          </div>
-        ))}
-      </div>
+        <div class="flex-1">
+            {grouped.map((g, i) => (
+                <div class={`slide ${i === 0 ? "block" : "hidden"}`} id={String(g.species)}>
+                    <h2 class="text-center text-lg font-semibold mb-2 text-secondary">{g.species}</h2>
+                    <PlotFigure options={makeOptions(g.data, g.species)} />
+                </div>
+            ))}
+        </div>
 
-      <button
-        id="next"
-        class="text-white bg-gray-800/50 hover:bg-gray-800 px-3 py-1 rounded ml-2">
-        ⟩
-      </button>
+        <button
+            id="next"
+            class="btn btn-circle btn-outline btn-primary ml-2"
+            aria-label="Suivant">
+            ⟩
+        </button>
     </div>
-  </section>
+</section>
 
   <script>
     const slides = document.querySelectorAll(".slide");

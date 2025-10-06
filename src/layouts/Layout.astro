@@ -11,13 +11,14 @@ import "../styles/global.css";
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
 
-    <nav class="bg-gray-800 text-white p-4">
+    <nav class="navbar bg-base-200 text-primary-content">
       <div class="container mx-auto flex gap-4">
-        <a href="/penguins" class="hover:underline">Tous les graphiques</a>
-        <a href="/rendu-dynamique" class="hover:underline">Rendu dynamique</a>
-        <a href="/rendu-statique" class="hover:underline">Rendu statique</a>
+        <a href="/"><span class="btn btn-ghost normal-case text-lg text-neutral hover:bg-primary hover:text-base-100">Accueil</span></a>
+        <a href="/penguins" class="btn btn-ghost normal-case text-lg text-neutral hover:bg-primary hover:text-base-100">Tous les graphiques</a>
+        <a href="/rendu-dynamique" class="btn btn-ghost normal-case text-lg text-neutral hover:bg-primary hover:text-base-100">Rendu dynamique</a>
+        <a href="/rendu-statique" class="btn btn-ghost normal-case text-lg text-neutral hover:bg-primary hover:text-base-100">Rendu statique</a>
       </div>
     </nav>
 
