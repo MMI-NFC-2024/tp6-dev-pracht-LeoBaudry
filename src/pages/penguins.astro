@@ -1,0 +1,58 @@
+---
+import PlotFigure from "../components/PlotFigure.astro";
+import Layout from "../layouts/Layout.astro";
+import * as Plot from "@observablehq/plot";
+import penguins from "../assets/penguins.json";
+
+const speciesList = [...new Set(penguins.map(p => p.species))];
+
+const grouped = speciesList.map(species => ({
+  species,
+  data: penguins.filter(p => p.species === species),
+}));
+
+function makeOptions(data, species) {
+  return {
+    grid: true,
+    marks: [
+      Plot.dot(data.filter(d => d.culmen_length_mm && d.culmen_depth_mm), {
+        x: "culmen_length_mm",
+        y: "culmen_depth_mm",
+        stroke: "sex",
+      }),
+    ],
+    x: { label: "Culmen length (mm)" },
+    y: { label: "Culmen depth (mm)" },
+    title: `Espèce ${species}`,
+  };
+}
+---
+<Layout>
+<h1>Graphiques de toutes les espèces de pingouins</h1>
+
+    <div class="tabs" id="tabs">
+      {grouped.map((g, i) => (
+        <button class={`tab ${i === 0 ? "active" : ""}`} data-target={g.species}>
+          {g.species}
+        </button>
+      ))}
+    </div>
+
+    {grouped.map((g, i) => (
+      <div id={g.species} class={`chart ${i === 0 ? "active" : ""}`}>
+        <PlotFigure options={makeOptions(g.data, g.species)} />
+      </div>
+    ))}
+
+    <script>
+      const tabs = document.querySelectorAll(".tab");
+      tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+          document.querySelectorAll(".chart").forEach(c => c.classList.remove("active"));
+          tab.classList.add("active");
+          document.getElementById((tab as HTMLElement).dataset.target).classList.add("active");
+        });
+      });
+    </script>
+</Layout>
